@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: $SERVICE_NAME
-        image: $SERVICE_NAME:$TAG
+        image: $SERVICE_NAME:$IMAGE_TAG
         ports:
         - containerPort: 80
 ---
