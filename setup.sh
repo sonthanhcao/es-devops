@@ -73,7 +73,7 @@ fi
 
 # Start kind cluster
 echo "Starting kind cluster..."
-kind create cluster
+kind create cluster || true
 
 echo "Dependencies installed and kind cluster started successfully."
 
