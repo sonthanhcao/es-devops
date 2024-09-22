@@ -89,6 +89,7 @@ NAMESPACE="arc-systems"
 helm upgrade --install arc \
     --namespace "$NAMESPACE" \
     --create-namespace \
+    --set serviceAccount.name=arc-gha-rs-controller \
     --set serviceAccount.create=false \
     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
 
