@@ -77,6 +77,14 @@ echo "Starting kind cluster..."
 kind create cluster || true
 
 echo "Dependencies installed and kind cluster started successfully."
+# Setup Cert-Manager
+helm repo add jetstack https://charts.jetstack.io --force-update
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.15.3 \
+  --set crds.enabled=true
 
 # Setup the GitHub Actions runner   
 kubectl create ns actions-runner-system || true
