@@ -24,7 +24,6 @@ jobs:
         run: |
           set -x
           # Variables
-          echo $DOCKER_USERNAME
           echo $SERVICE_NAME
 
       - name: Set up Docker Buildx #Setup Buildx for caching
