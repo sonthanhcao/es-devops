@@ -5,7 +5,7 @@ repo (Full control) # For setup runner
 write:packages # For Using Github docker repo
 ```
 - Create GH_TOKEN secret in your fork repository with value above
-
+- Create MONGODB_URI secret in your fork repository with value above
 
 ### Using `setup.sh` for Automated Setup
 
