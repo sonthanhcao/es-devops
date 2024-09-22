@@ -1,4 +1,13 @@
 #!/bin/bash
+set -e
+
+
+# Load variables from config.yaml
+while IFS=: read -r key value; do
+  key=$(echo "$key" | xargs)         # Trim whitespace
+  value=$(echo "$value" | xargs | tr -d '"')  # Trim whitespace and remove quotes
+  export "$key=$value"
+done < <(awk '!/^#/ && NF {print}' config.yaml)  # Ignore comments and empty lines
 
 # Function to install dependencies on macOS
 install_macos() {
