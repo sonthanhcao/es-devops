@@ -1,23 +1,17 @@
-name: Build and Deploy
+name: Build and Deploy Prod
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - '.github/workflows/**'
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:    
-      - 'main'
-  workflow_dispatch:
+    tags:
+      - v**
 
 env:
   SERVICE_NAME: ${{ github.event.repository.name }}
 
 jobs:
   build:
-    runs-on: shared-github-runner
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -49,16 +43,8 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
           cache-from: type=gha, scope=${{ github.workflow }}
-
+          build-args: |
+            NODE_ENV=production
+            
       - name: Log out from GitHub Docker registry
         run: docker logout ghcr.io
-  deploy:
-    needs: build
-    runs-on: shared-github-runner
-    steps:
-    - name: Print and Set variables
-      shell: bash
-      run: |
-        set -x
-        # Variables
-        echo $SERVICE_NAME
