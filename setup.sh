@@ -2,12 +2,16 @@
 set -e
 
 
+load_config() {
+    while IFS=: read -r key value; do
+        key=$(echo "$key" | xargs)         # Trim whitespace
+        value=$(echo "$value" | xargs | tr -d '"')  # Trim whitespace and remove quotes
+        export "$key=$value"
+    done < <(awk '!/^#/ && NF {print}' config.yaml)  # Ignore comments and empty lines
+}
+
 # Load variables from config.yaml
-while IFS=: read -r key value; do
-  key=$(echo "$key" | xargs)         # Trim whitespace
-  value=$(echo "$value" | xargs | tr -d '"')  # Trim whitespace and remove quotes
-  export "$key=$value"
-done < <(awk '!/^#/ && NF {print}' config.yaml)  # Ignore comments and empty lines
+load_config
 
 # Function to install dependencies on macOS
 install_macos() {
@@ -72,3 +76,12 @@ echo "Starting kind cluster..."
 kind create cluster
 
 echo "Dependencies installed and kind cluster started successfully."
+
+# Setup the GitHub Actions runner   
+kubectl create ns actions-runner-system
+kubectl create secret generic controller-manager \
+    -n actions-runner-system \
+    --from-literal=github_token=$GITHUB_TOKEN
+helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
+helm upgrade --install --namespace actions-runner-system --create-namespace \
+             --wait actions-runner-controller actions-runner-controller/actions-runner-controller
