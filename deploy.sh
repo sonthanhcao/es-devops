@@ -12,11 +12,11 @@ if [[ "$CI_COMMIT_TAG" != "" ]]; then
 fi
 # Replace variables in the YAML file
 sed -e "s/\$SERVICE_NAME/$SERVICE_NAME/g" -e "s/\$IMAGE_TAG/$IMAGE_TAG/g" ./deployment/main.yaml > ./deployment/k8s-main.yaml
-kubectl apply -f ./deployment/k8s-main.yaml
+kubectl apply -f ./deployment/k8s-main.yaml -n default
 if [[ $? != 0 ]]; then exit 1; fi
 
-kubectl rollout status deployments/$SERVICE_NAME
+kubectl rollout status deployments/$SERVICE_NAME -n default
 
 if [[ $? != 0 ]]; then
-    kubectl logs $(kubectl get pods --sort-by=.metadata.creationTimestamp | grep "$SERVICE_NAME" | awk '{print $1}' | tac | head -1 ) --tail=20 && exit 1;
+    kubectl logs -n default $(kubectl get pods -n default --sort-by=.metadata.creationTimestamp | grep "$SERVICE_NAME" | awk '{print $1}' | tac | head -1 ) --tail=20 && exit 1;
 fi
