@@ -94,12 +94,12 @@ helm upgrade --install arc \
     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
 
 # Setup Runner Scale Set
-INSTALLATION_NAME="arc-runner-set"
+INSTALLATION_NAME="shared-github-runner"
 NAMESPACE="arc-runners"
 GITHUB_CONFIG_URL="https://github.com/$GITHUB_RUNNER_ORG/$GITHUB_RUNNER_REPO"
-helm install "${INSTALLATION_NAME}" \
+helm upgrade --install "$INSTALLATION_NAME" \
     --namespace "${NAMESPACE}" \
     --create-namespace \
-    --set githubConfigUrl="${GITHUB_CONFIG_URL}" \
+    --set githubConfigUrl="$GITHUB_CONFIG_URL" \
     --set githubConfigSecret.github_token="$GITHUB_TOKEN" \
     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set

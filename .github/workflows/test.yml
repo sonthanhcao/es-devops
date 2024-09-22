@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 jobs:
   greet:
-    runs-on: self-hosted
+    runs-on: shared-github-runner
     steps:
     - name: Hello
       run: |
