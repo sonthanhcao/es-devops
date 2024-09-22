@@ -18,7 +18,7 @@ spec:
       - name: $SERVICE_NAME
         image: $DOCKER_REPO/$SERVICE_NAME:$IMAGE_TAG
         ports:
-        - containerPort: 80
+        - containerPort: 8080
       imagePullSecrets:
       - name: docker-pull-secret
 ---
@@ -32,7 +32,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
   type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
