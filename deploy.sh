@@ -11,7 +11,7 @@ if [[ "$CI_COMMIT_TAG" != "" ]]; then
       export IMAGE_TAG=$CI_COMMIT_TAG
 fi
 # Replace variables in the YAML file
-sed -e "s/\$SERVICE_NAME/$SERVICE_NAME/g" -e "s/\$SERVICE_NAME/$DOCKER_REPO/g" -e "s/\$IMAGE_TAG/$IMAGE_TAG/g" ./deployment/main.yaml > ./deployment/k8s-main.yaml
+sed -e "s/\$SERVICE_NAME/$SERVICE_NAME/g" -e "s/\$DOCKER_REPO/$DOCKER_REPO/g" -e "s/\$IMAGE_TAG/$IMAGE_TAG/g" ./deployment/main.yaml > ./deployment/k8s-main.yaml
 kubectl apply -f ./deployment/k8s-main.yaml -n $NAMESPACE
 if [[ $? != 0 ]]; then exit 1; fi
 
