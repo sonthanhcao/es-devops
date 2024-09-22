@@ -17,7 +17,7 @@ env:
 
 jobs:
   build:
-    runs-on: shared-github-runner
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -62,3 +62,13 @@ jobs:
         set -x
         # Variables
         echo $SERVICE_NAME
+        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'latest'
+
+    - name: Deploy to Kubernetes
+      shell: bash
+      run: |
+        bash deploy.sh
