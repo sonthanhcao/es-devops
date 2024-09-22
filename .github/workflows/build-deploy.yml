@@ -16,6 +16,7 @@ env:
   SERVICE_NAME: ${{ github.event.repository.name }}
   ENVIROMENT: development
   HOSTNAME: es-devops-dev.example.com
+  MONGO_URI: ${{ secrets.MONGO_URI }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -72,6 +73,7 @@ jobs:
         echo "DOCKER_REPO=ghcr.io/${{ github.repository_owner }}" >> $GITHUB_ENV
         echo "GITHUB_USER=${{ github.actor }}" >> $GITHUB_ENV
         echo "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
       with:

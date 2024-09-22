@@ -20,6 +20,11 @@ kubectl create secret docker-registry docker-pull-secret \
   --namespace $NAMESPACE \
   --dry-run=client -o yaml | kubectl apply -f -
 
+kubectl create secret generic mongo-uri-secret \
+  --from-literal=MONGO_URI=$MONGO_URI \
+  --namespace $NAMESPACE \
+  --dry-run=client -o yaml | kubectl apply -f -
+
 # Escape special characters in variables
 ESCAPED_DOCKER_REPO=$(printf '%s\n' "$DOCKER_REPO" | sed -e 's/[\/&]/\\&/g')
 
