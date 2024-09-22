@@ -68,6 +68,7 @@ jobs:
         echo "DOCKER_REPO=ghcr.io/${{ github.repository_owner }}" >> $GITHUB_ENV
         echo "GITHUB_USER=${{ github.actor }}" >> $GITHUB_ENV
         echo "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+        echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
       with:

@@ -40,7 +40,7 @@ write:packages # For Using Github docker repo
 
 - [x] Document the setup process in the README.
 - [ ] Create unit tests for the setup script.
-- [ ] Set up continuous integration for automated testing.
+- [x] Set up continuous integration for automated testing.
 - [x] Ensure cross-platform compatibility.
 
 ### Bonus
