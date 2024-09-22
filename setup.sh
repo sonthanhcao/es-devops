@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-
 load_config() {
     while IFS=: read -r key value; do
         key=$(echo "$key" | xargs)         # Trim whitespace
@@ -22,7 +21,7 @@ install_macos() {
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
     # Install dependencies using Homebrew
-    brew install docker kubectl kind
+    brew install docker kubectl kind helm
 }
 
 # Function to install dependencies on Linux
@@ -47,7 +46,6 @@ install_linux() {
     apt-get update
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-
     # Install kubectl
     curl -LO "https://dl.k8s.io/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
@@ -59,6 +57,9 @@ install_linux() {
     [ $(uname -m) = aarch64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.24.0/kind-linux-arm64
     chmod +x ./kind
     sudo mv ./kind /usr/local/bin/kind
+
+    # Install Helm
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 }
 
 # Detect the operating system
