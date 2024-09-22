@@ -121,5 +121,5 @@ kubectl create clusterrolebinding shared-github-runner-binding \
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 
 # Create Namespace
-kubectl create ns development || true
-kubectl create ns development || true
+kubectl create ns development > /dev/null 2>&1 || true
+kubectl create ns production > /dev/null 2>&1 || true
