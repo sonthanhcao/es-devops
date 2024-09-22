@@ -78,19 +78,10 @@ kind create cluster || true
 
 echo "Dependencies installed and kind cluster started successfully."
 
-# Setup Actions Runner Controller
-kubectl create ns arc-systems || true 
-kubectl create sa arc-gha-rs-controller -n arc-systems || true
-kubectl create clusterrolebinding arc-gha-rs-controller-binding \
-  --clusterrole=cluster-admin \
-  --serviceaccount=arc-system:arc-gha-rs-controller || true
-
 NAMESPACE="arc-systems"
 helm upgrade --install arc \
     --namespace "$NAMESPACE" \
     --create-namespace \
-    --set serviceAccount.name=arc-gha-rs-controller \
-    --set serviceAccount.create=false \
     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
 
 # Setup Runner Scale Set
@@ -101,7 +92,8 @@ helm upgrade --install "$INSTALLATION_NAME" \
     --namespace "$NAMESPACE" \
     --create-namespace \
     --set githubConfigUrl="$GITHUB_CONFIG_URL" \
-    --set controllerServiceAccount.namespace=arc-systems \
-    --set controllerServiceAccount.name=arc-gha-rs-controller \
     --set githubConfigSecret.github_token="$GITHUB_TOKEN" \
     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
+kubectl create clusterrolebinding shared-github-runner-binding \
+  --clusterrole=cluster-admin \
+  --serviceaccount=arc-runners:shared-github-runner-gha-rs-no-permission || true
