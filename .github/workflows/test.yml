@@ -1,0 +1,11 @@
+name: Test
+on:
+  workflow_dispatch:
+jobs:
+  greet:
+    runs-on: self-hosted
+    steps:
+    - name: Hello
+      run: |
+        sleep 60
+        echo "Hello world!"
