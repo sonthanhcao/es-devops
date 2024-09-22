@@ -86,7 +86,7 @@ helm install \
   --version v1.15.3 \
   --set crds.enabled=true
 
-# Setup the GitHub Actions runner   
+# Setup the GitHub Actions runner controller
 kubectl create ns actions-runner-system || true
 kubectl apply -f - <<EOF
 apiVersion: v1
@@ -99,6 +99,20 @@ data:
   github_token: $(echo -n "$GITHUB_TOKEN" | base64)
 EOF
 
-helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
-helm upgrade --install --namespace actions-runner-system --create-namespace \
-             --wait actions-runner-controller actions-runner-controller/actions-runner-controller
+
+NAMESPACE="arc-systems"
+helm install arc \
+    --namespace "${NAMESPACE}" \
+    --create-namespace \
+    oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
+
+# Setup Runner Scale Set
+INSTALLATION_NAME="arc-runner-set"
+NAMESPACE="arc-runners"
+GITHUB_CONFIG_URL="https://github.com/$GITHUB_RUNNER_ORG/$GITHUB_RUNNER_REPO"
+helm install "${INSTALLATION_NAME}" \
+    --namespace "${NAMESPACE}" \
+    --create-namespace \
+    --set githubConfigUrl="${GITHUB_CONFIG_URL}" \
+    --set githubConfigSecret.github_token="$GITHUB_TOKEN" \
+    oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
