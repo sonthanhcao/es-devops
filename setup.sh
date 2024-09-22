@@ -79,7 +79,7 @@ kind create cluster || true
 echo "Dependencies installed and kind cluster started successfully."
 # Setup Cert-Manager
 helm repo add jetstack https://charts.jetstack.io --force-update
-helm install \
+helm upgrade --install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --create-namespace \
