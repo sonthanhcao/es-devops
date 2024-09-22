@@ -89,7 +89,7 @@ helm upgrade --install \
 # Setup Actions Runner Controller
 NAMESPACE="arc-systems"
 helm upgrade --install arc \
-    --namespace "${NAMESPACE}" \
+    --namespace "$NAMESPACE" \
     --create-namespace \
     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
 
@@ -98,7 +98,7 @@ INSTALLATION_NAME="shared-github-runner"
 NAMESPACE="arc-runners"
 GITHUB_CONFIG_URL="https://github.com/$GITHUB_RUNNER_ORG/$GITHUB_RUNNER_REPO"
 helm upgrade --install "$INSTALLATION_NAME" \
-    --namespace "${NAMESPACE}" \
+    --namespace "$NAMESPACE" \
     --create-namespace \
     --set githubConfigUrl="$GITHUB_CONFIG_URL" \
     --set githubConfigSecret.github_token="$GITHUB_TOKEN" \
