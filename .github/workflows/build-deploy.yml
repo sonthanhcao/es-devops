@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  SERVICE_NAME: ${{ github.event.repository.name }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -42,7 +45,7 @@ jobs:
           push: true
           cache-to: type=gha,mode=max, scope=${{ github.workflow }}
           tags: |
-            ${{ github.repository_owner }}/${{ github.repository }}-be:${{ github.sha }}
+            ${{ github.repository_owner }}/$SERVICE_NAME-be:${{ github.sha }}
           cache-from: type=gha, scope=${{ github.workflow }}
       - name: Build and push Docker fe
         uses: docker/build-push-action@v2
@@ -52,7 +55,7 @@ jobs:
           push: true
           cache-to: type=gha,mode=max, scope=${{ github.workflow }}
           tags: |
-            ${{ github.repository_owner }}/${{ github.repository }}-fe:${{ github.sha }}
+            ${{ github.repository_owner }}/$SERVICE_NAME-fe:${{ github.sha }}
 
       - name: Log out from GitHub Docker registry
         run: docker logout ghcr.io
