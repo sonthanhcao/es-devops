@@ -8,11 +8,6 @@ on:
     branches:
       - main
 
-env:
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  SERVICE_NAME: ${github.repository}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,21 +34,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_TOKEN }}
 
-      - name: Build and push $SERVICE_NAME-be
+      - name: Build and push Docker be
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile-be
           push: true
-          tags: $DOCKER_USERNAME/$SERVICE_NAME-be:latest
-
-      - name: Build and push $SERVICE_NAME-fe
+          tags: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-be:latest
+      - name: Build and push Docker fe
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile-fe
           push: true
-          tags: $DOCKER_USERNAME/$SERVICE_NAME-fe:latest
+          tags: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}-fe:latest
 
-      - name: Log out from Docker Hub
-        run: docker logout
+      - name: Log out from GitHub Docker registry
+        run: docker logout ghcr.io
