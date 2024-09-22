@@ -11,6 +11,15 @@ if [[ "$CI_COMMIT_TAG" != "" ]]; then
   export IMAGE_TAG=$CI_COMMIT_TAG
 fi
 
+# Create Docker Pull Secret
+kubectl create secret docker-registry docker-pull-secret \
+  --docker-server=$DOCKER_REPO \
+  --docker-username=$GITHUB_USER \
+  --docker-password=$GITHUB_TOKEN \
+  --docker-email=sc@example.com \
+  --namespace $NAMESPACE \
+  --dry-run=client -o yaml | kubectl apply -f -
+
 # Escape special characters in variables
 ESCAPED_DOCKER_REPO=$(printf '%s\n' "$DOCKER_REPO" | sed -e 's/[\/&]/\\&/g')
 

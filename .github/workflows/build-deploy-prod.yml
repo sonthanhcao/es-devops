@@ -65,14 +65,17 @@ jobs:
         ls -al
         # Variables
         echo $SERVICE_NAME
-        echo "IMAGE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
         echo "NAMESPACE=$ENVIROMENT" >> $GITHUB_ENV
+        echo "DOCKER_REPO=ghcr.io/${{ github.repository_owner }}" >> $GITHUB_ENV
+        echo "GITHUB_USER=${{ github.actor }}" >> $GITHUB_ENV
+        echo "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
       with:
         version: 'latest'
 
-    - name: Deploy to Kubernetes
+    - name: Deploy to Kubernetes Prod
       shell: bash
       run: |
         bash deploy.sh
