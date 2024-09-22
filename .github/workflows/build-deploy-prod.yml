@@ -15,6 +15,7 @@ on:
 env:
   SERVICE_NAME: ${{ github.event.repository.name }}
   ENVIROMENT: production
+  HOSTNAME: es-devops.example.com
 jobs:
   build:
     runs-on: ubuntu-latest

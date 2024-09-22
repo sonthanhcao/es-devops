@@ -13,7 +13,8 @@
 
 - Installs necessary dependencies.
 - Sets up environment variables.
-- Configures the application for the specified environment.
+- Setup K8s Cluster using kind
+- Deploy Self host github action Runner to your repo
 
 ### Troubleshooting `setup.sh`
 
@@ -25,7 +26,7 @@ Configuration options and their effects
 
 
 
-# OutCome
+### OutCome
 - [ ] Implement a build script (build.sh)
 - [ ] Kubernetes manifests
 - [ ] Implement a deployment script (deploy.sh) to apply the Kubernetes manifests.
@@ -36,7 +37,7 @@ Configuration options and their effects
 - [ ] Set up continuous integration for automated testing.
 - [ ] Ensure cross-platform compatibility.
 
-## Bonus
+### Bonus
 - [ ] Implement monitoring and logging solutions.
 - [ ] Add rollback capabilities to the deployment process.
 - [ ] Integrate with a package manager for dependency management.

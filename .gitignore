@@ -50,7 +50,7 @@ Thumbs.db
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-config.yaml
+config-local.yaml
 Note.md
 terraform.tfstate
 .terraform
