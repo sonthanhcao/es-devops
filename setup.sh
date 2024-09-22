@@ -86,22 +86,9 @@ helm upgrade --install \
   --version v1.15.3 \
   --set crds.enabled=true
 
-# Setup the GitHub Actions runner controller
-kubectl create ns actions-runner-system || true
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: Secret
-metadata:
-  name: controller-manager
-  namespace: actions-runner-system
-type: Opaque
-data:
-  github_token: $(echo -n "$GITHUB_TOKEN" | base64)
-EOF
-
-
+# Setup Actions Runner Controller
 NAMESPACE="arc-systems"
-helm install arc \
+helm upgrade --install arc \
     --namespace "${NAMESPACE}" \
     --create-namespace \
     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
