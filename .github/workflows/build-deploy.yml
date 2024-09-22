@@ -67,6 +67,7 @@ jobs:
         echo $SERVICE_NAME
         echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
         echo "NAMESPACE=$ENVIROMENT" >> $GITHUB_ENV
+        echo "DOCKER_REPO=ghcr.io/${{ github.repository_owner }}" >> $GITHUB_ENV
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
       with:
