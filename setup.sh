@@ -83,7 +83,7 @@ kubectl create ns arc-system || true
 kubectl create sa arc-gha-rs-controller -n arc-system || true
 kubectl create clusterrolebinding arc-gha-rs-controller-binding \
   --clusterrole=cluster-admin \
-  --serviceaccount=arc-system:arc-gha-rs-controller
+  --serviceaccount=arc-system:arc-gha-rs-controller || true
 
 NAMESPACE="arc-systems"
 helm upgrade --install arc \
