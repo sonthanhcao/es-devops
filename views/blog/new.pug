@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  h1= title
+  form(action="/blog/new", method="POST")
+    input(type="hidden", name="_csrf", value=csrfToken)
+    div
+      label(for="title") Title
+      input(type="text", name="title", required)
+    div
+      label(for="content") Content
+      textarea(name="content", required)
+    button(type="submit") Create

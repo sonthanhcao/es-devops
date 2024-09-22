@@ -246,6 +246,14 @@ app.get('/auth/quickbooks/callback', passport.authorize('quickbooks', { failureR
   res.redirect(req.session.returnTo);
 });
 
+// Update
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: true });
+
+app.use(csrfProtection);
+const blogRoutes = require('./routes/blog');
+app.use('/blog', blogRoutes);
+
 /**
  * Error Handler.
  */

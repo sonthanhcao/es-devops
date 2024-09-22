@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  h1= title
+  if blogPosts && blogPosts.length
+    each post in blogPosts
+      h2= post.title
+      p= post.content
+      p
+        a(href=`/blog/${post._id}/edit`) Edit
+        form(action=`/blog/${post._id}/delete`, method="POST")
+          button(type="submit") Delete
+  else
+    p No blog posts available.
+  a(href="/blog/new") New Blog Post
