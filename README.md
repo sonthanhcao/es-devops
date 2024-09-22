@@ -31,6 +31,7 @@ write:packages # For Using Github docker repo
 - **Environment Variable Issues**: Double-check that all necessary environment variables are correctly set.
 
 ### OutCome
+- [x] Implement a setup script (setup.sh)
 - [x] Implement a build script (build.sh)
 - [ ] Application Modification full-stack web application backend + frontend - No Just one service
 - [x] Kubernetes manifests

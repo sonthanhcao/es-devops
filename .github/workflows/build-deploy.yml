@@ -30,6 +30,8 @@ jobs:
           set -x
           # Variables
           echo $SERVICE_NAME
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
+          sed -i "s|^MONGODB_URI=.*|MONGODB_URI=$MONGO_URI|" .env.example
 
       - name: Set up Docker Buildx #Setup Buildx for caching
         uses: docker/setup-buildx-action@v3
