@@ -21,33 +21,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
+      - name: Print and Set variables
+        shell: bash
+        run: |
+          set -x
+          # Variables
+          echo $DOCKER_USERNAME
+          echo $SERVICE_NAME
 
       - name: Set up Docker Buildx #Setup Buildx for caching
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+      - name: Log in to GitHub Docker registry
+        uses: docker/login-action@v3
         with:
-          username: $DOCKER_USERNAME
-          password: $DOCKER_PASSWORD
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push $SERVICE_NAME-be
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile-be
           push: true
           tags: $DOCKER_USERNAME/$SERVICE_NAME-be:latest
+
+      - name: Build and push $SERVICE_NAME-fe
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile-fe
+          push: true
+          tags: $DOCKER_USERNAME/$SERVICE_NAME-fe:latest
 
       - name: Log out from Docker Hub
         run: docker logout
