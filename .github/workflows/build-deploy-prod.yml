@@ -2,14 +2,8 @@ name: Build and Deploy Prod
 
 on:
   push:
-    branches:
-      - main
-    paths-ignore:
-      - '.github/workflows/**'
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:    
-      - 'main'
+    tags:
+      - v**
   workflow_dispatch:
 
 env:

@@ -1,3 +1,12 @@
+### Setup Repo Secret and Create GITHUB PAT Token
+```
+Create Classic Personal Access token as below
+repo (Full control) # For setup runner
+write:packages # For Using Github docker repo
+```
+- Create GH_TOKEN secret in your fork repository with value above
+
+
 ### Using `setup.sh` for Automated Setup
 
 1. Ensure you have execution permissions for the script:
