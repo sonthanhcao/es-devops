@@ -1,0 +1,11 @@
+DOCKER_REPO: ghcr.io/sonthanhcao
+GITHUB_USER: sonthanhcao
+GITHUB_TOKEN: ***
+GITHUB_RUNNER_ORG: sonthanhcao
+GITHUB_RUNNER_REPO: es-devops
+IMAGE_TAG: latest
+NODE_ENV: production
+FRONTEND_DOCKERFILE: Dockerfile-fe
+BACKEND_DOCKERFILE: Dockerfile
+FRONTEND_IMAGE_NAME: es-devops-frontend
+BACKEND_IMAGE_NAME: es-devops

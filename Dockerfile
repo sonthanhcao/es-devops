@@ -1,18 +1,25 @@
 FROM node:20-slim
-
 WORKDIR /starter
-ENV NODE_ENV development
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
 
 COPY .env.example /starter/.env.example
 COPY . /starter
 
 RUN npm install pm2 -g
+RUN echo "NODE_ENV=$NODE_ENV"
 RUN if [ "$NODE_ENV" = "production" ]; then \
     npm install --omit=dev; \
     else \
     npm install; \
     fi
 
-CMD ["pm2-runtime","app.js"]
+# Change ownership of the application files to the node user
+RUN chown -R node:node /starter
+
+# Switch to the node user
+USER node
+
+CMD ["pm2-runtime", "app.js"]
 
 EXPOSE 8080

@@ -74,11 +74,29 @@ fi
 
 # Start kind cluster
 echo "Starting kind cluster..."
-kind create cluster || true
+cat <<EOF | kind create cluster --config=- || true
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    protocol: TCP
+EOF
+
 
 echo "Dependencies installed and kind cluster started successfully."
 
-# Setup Actions Runner Controller
 NAMESPACE="arc-systems"
 helm upgrade --install arc \
     --namespace "$NAMESPACE" \
@@ -95,3 +113,13 @@ helm upgrade --install "$INSTALLATION_NAME" \
     --set githubConfigUrl="$GITHUB_CONFIG_URL" \
     --set githubConfigSecret.github_token="$GITHUB_TOKEN" \
     oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set
+kubectl create clusterrolebinding shared-github-runner-binding \
+  --clusterrole=cluster-admin \
+  --serviceaccount=arc-runners:shared-github-runner-gha-rs-no-permission || true
+
+# Create Ingress Nginx 
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+# Create Namespace
+kubectl create ns development > /dev/null 2>&1 || true
+kubectl create ns production > /dev/null 2>&1 || true

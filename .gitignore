@@ -50,9 +50,11 @@ Thumbs.db
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-config.yaml
+config-local.yaml
 Note.md
 terraform.tfstate
 .terraform
 .terraform.lock.hcl
 terraform.tfstate.backup
+terraform.tfplan
+.terraform.tfstate.lock.info
