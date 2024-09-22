@@ -80,9 +80,17 @@ echo "Dependencies installed and kind cluster started successfully."
 
 # Setup the GitHub Actions runner   
 kubectl create ns actions-runner-system || true
-kubectl create secret generic controller-manager \
-    -n actions-runner-system \
-    --from-literal=github_token=$GITHUB_TOKEN
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: controller-manager
+  namespace: actions-runner-system
+type: Opaque
+data:
+  github_token: $(echo -n "$GITHUB_TOKEN" | base64)
+EOF
+
 helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
 helm upgrade --install --namespace actions-runner-system --create-namespace \
              --wait actions-runner-controller actions-runner-controller/actions-runner-controller
