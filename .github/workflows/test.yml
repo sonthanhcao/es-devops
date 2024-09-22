@@ -8,8 +8,11 @@ on:
   workflow_dispatch:
 jobs:
   greet:
-    runs-on: shared-github-runner
+    runs-on: ubuntu-latest
     steps:
-    - name: Hello
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Test
       run: |
-        echo "Hello world!"
+        npm install
+        npm test

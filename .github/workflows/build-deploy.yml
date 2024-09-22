@@ -16,7 +16,7 @@ env:
   SERVICE_NAME: ${{ github.event.repository.name }}
   ENVIROMENT: development
   HOSTNAME: es-devops-dev.example.com
-  MONGO_URI: ${{ secrets.MONGO_URI }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,8 +30,7 @@ jobs:
           set -x
           # Variables
           echo $SERVICE_NAME
-          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
-          sed -i "s|^MONGODB_URI=.*|MONGODB_URI=$MONGO_URI|" .env.example
+
 
       - name: Set up Docker Buildx #Setup Buildx for caching
         uses: docker/setup-buildx-action@v3
@@ -75,7 +74,6 @@ jobs:
         echo "DOCKER_REPO=ghcr.io/${{ github.repository_owner }}" >> $GITHUB_ENV
         echo "GITHUB_USER=${{ github.actor }}" >> $GITHUB_ENV
         echo "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
-        echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> $GITHUB_ENV
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
       with:

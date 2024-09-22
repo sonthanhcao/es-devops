@@ -21,7 +21,7 @@ kubectl create secret docker-registry docker-pull-secret \
   --dry-run=client -o yaml | kubectl apply -f -
 
 kubectl create secret generic mongo-uri-secret \
-  --from-literal=MONGO_URI=$MONGO_URI \
+  --from-literal=MONGODB_URI=$MONGODB_URI \
   --namespace $NAMESPACE \
   --dry-run=client -o yaml | kubectl apply -f -
 

@@ -20,11 +20,11 @@ spec:
         ports:
         - containerPort: 8080
         env:
-        - name: MONGO_URI
+        - name: MONGODB_URI
           valueFrom:
             secretKeyRef:
               name: mongo-uri-secret
-              key: MONGO_URI
+              key: MONGODB_URI
       imagePullSecrets:
       - name: docker-pull-secret
 ---
