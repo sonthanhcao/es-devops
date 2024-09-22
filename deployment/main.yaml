@@ -19,6 +19,8 @@ spec:
         image: $DOCKER_REPO/$SERVICE_NAME:$IMAGE_TAG
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: docker-pull-secret
 ---
 apiVersion: v1
 kind: Service
