@@ -11,16 +11,16 @@ while IFS=: read -r key value; do
 done < <(awk '!/^#/ && NF {print}' config.yaml)  # Ignore comments and empty lines
 
 # Configurable variables (can be overridden via environment variables or arguments)
-DOCKER_REGISTRY=${DOCKER_REGISTRY}
+DOCKER_REGISTRY=ghcr.io
 FRONTEND_IMAGE_NAME=${FRONTEND_IMAGE_NAME}
 BACKEND_IMAGE_NAME=${BACKEND_IMAGE_NAME}
 IMAGE_TAG=${IMAGE_TAG}
 NODE_ENV=${NODE_ENV}
 FRONTEND_DOCKERFILE=${FRONTEND_DOCKERFILE}
 BACKEND_DOCKERFILE=${BACKEND_DOCKERFILE}
-DOCKER_PASSWORD=${DOCKER_PASSWORD}
+DOCKER_PASSWORD=$GITHUB_TOKEN
 
-docker login --username $DOCKER_REGISTRY -p $DOCKER_PASSWORD
+docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY -p $DOCKER_PASSWORD
 
 # Build the frontend Docker image
 echo "Building frontend Docker image..."
