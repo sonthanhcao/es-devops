@@ -79,7 +79,7 @@ kind create cluster || true
 echo "Dependencies installed and kind cluster started successfully."
 
 # Setup the GitHub Actions runner   
-kubectl create ns actions-runner-system
+kubectl create ns actions-runner-system || true
 kubectl create secret generic controller-manager \
     -n actions-runner-system \
     --from-literal=github_token=$GITHUB_TOKEN
