@@ -38,7 +38,7 @@ write:packages # For Using Github docker repo
 - [x] Kubernetes manifests
 - [x] Implement a deployment script (deploy.sh) to apply the Kubernetes manifests.
 - [x] CICD using Github action
-- [x] Sample Terraform code for creating VPC + EC2
+- [x] Sample Terraform code for creating VPC + EC2 ./infrastructure
 
 - [x] Document the setup process in the README.
 - [ ] Create unit tests for the setup script.
