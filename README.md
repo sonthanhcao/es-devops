@@ -24,12 +24,13 @@ write:packages # For Using Github docker repo
 - Sets up environment variables.
 - Setup K8s Cluster using kind
 - Deploy Self host github action Runner to your repo
+- Deploy other helm chart like ingress
 
 ### Troubleshooting `setup.sh`
 
 - **Permission Denied**: Ensure the script has execution permissions.
 - **Environment Variable Issues**: Double-check that all necessary environment variables are correctly set.
-
+- **Mongo connection issue** If you're using MongoDB Atlas, make sure to allow access from all IP addresses (0.0.0.0/0) in your Network Access settings
 ### OutCome
 - [x] Implement a setup script (setup.sh)
 - [x] Implement a build script (build.sh)
