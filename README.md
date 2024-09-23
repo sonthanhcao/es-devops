@@ -61,6 +61,10 @@ REPOSITORY                                                               TAG    
 ghcr.io/sonthanhcao/es-devops-frontend                                   latest                                      6ebd775cad16   2 minutes ago   1.71GB
 ghcr.io/sonthanhcao/es-devops                                            latest                                      6ebd775cad16   2 minutes ago   1.71GB
 ```
+#### Deploy
+
+- Pipeline `Build and Deploy` will be run auttomatically to deploy to dev namespace
+- Pipeline `Build and Deploy Prod` will be trigger by tag in format v*
 #### K8s
 ```
 root@ip-10-101-240-5:/opt/es-devops# kubectl get pod -A
