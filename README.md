@@ -67,6 +67,7 @@ ghcr.io/sonthanhcao/es-devops                                            latest 
 
 - Pipeline `Build and Deploy` will be run auttomatically to deploy to dev namespace
 - Pipeline `Build and Deploy Prod` will be trigger by tag in format v*
+- Pipeline `Rollback Deployment` allows you to roll back to any specific Docker image version
 #### K8s
 ```
 root@ip-10-101-240-5:/opt/es-devops# kubectl get pod -A
