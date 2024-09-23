@@ -7,7 +7,7 @@ on:
       - '.github/workflows/**'
   workflow_dispatch:
 jobs:
-  greet:
+  test:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
