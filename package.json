@@ -90,9 +90,7 @@
     "mongodb-memory-server": "^9.0.1",
     "nyc": "^15.1.0",
     "sinon": "^16.1.0",
-    "supertest": "^6.3.3",
-    "nyc": "^15.0.0",
-    "mocha": "^9.0.0"
+    "supertest": "^6.3.3"
   },
   "config": {
     "mongodbMemoryServer": {

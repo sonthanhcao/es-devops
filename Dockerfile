@@ -22,4 +22,4 @@ USER node
 
 CMD ["pm2-runtime", "app.js"]
 
-EXPOSE 8080
+EXPOSE 8080 80
