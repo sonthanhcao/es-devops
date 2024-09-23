@@ -64,7 +64,7 @@ jobs:
         ls -al
         # Variables
         echo $SERVICE_NAME
-        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+        echo "IMAGE_TAG=$(echo ${{ github.ref_name }} | sed 's/\//-/g')" >> $GITHUB_ENV
         echo "NAMESPACE=$ENVIROMENT" >> $GITHUB_ENV
         echo "DOCKER_REPO=ghcr.io/${{ github.repository_owner }}" >> $GITHUB_ENV
         echo "GITHUB_USER=${{ github.actor }}" >> $GITHUB_ENV
